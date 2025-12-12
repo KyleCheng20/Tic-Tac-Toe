@@ -31,3 +31,65 @@ const gameBoard = (function (){
 function player(name, marker){
     return {name, marker};
 }
+
+const gameController = (function(){
+    const board = gameBoard.getBoard();
+    const player1 = player('Player1', 'X');
+    const player2 = player('Player2', 'O');
+    let currPlayer = player1;
+
+    const switchPlayer = () => {currPlayer = currPlayer === player1 ? player2 : player1};
+
+    function checkWinner(marker){
+        //Check row wins
+        for(let row = 0; row < 3; row++){
+            if(
+                board[row][0] === marker &&
+                board[row][1] === marker &&
+                board[row][2] === marker
+            ){
+                return true;
+            }
+        }
+
+        //Check col wins
+        for(let col = 0; col < 3; col++){
+            if(
+                board[0][col] === marker &&
+                board[1][col] === marker &&
+                board[2][col] === marker
+            ){
+                return true;
+            }
+        }
+
+        //Check diagonal wins
+        if(
+            board[0][0] === marker &&
+            board[1][1] === marker &&
+            board[2][2] === marker
+        ){
+            return true;
+        }
+        if(
+            board[0][2] === marker &&
+            board[1][1] === marker &&
+            board[2][0] === marker
+        ){
+            return true;
+        }
+
+        return false;
+    }
+
+    function checkTie(){
+        for(let row = 0; row < 3; row++){
+            for(let col = 0; col < 3; col++){
+                if(board[row][col] === ''){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+})();
