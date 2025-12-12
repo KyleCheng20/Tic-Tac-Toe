@@ -28,3 +28,6 @@ const gameBoard = (function (){
     return {getBoard, resetBoard, setCell};
 })();
 
+function player(name, marker){
+    return {name, marker};
+}
