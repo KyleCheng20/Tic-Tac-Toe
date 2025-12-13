@@ -34,6 +34,7 @@ function player(name, marker){
 
 const gameController = (function(){
     const board = gameBoard.getBoard();
+    let gameOver = false;
     const player1 = player('Player1', 'X');
     const player2 = player('Player2', 'O');
     let currPlayer = player1;
@@ -92,4 +93,36 @@ const gameController = (function(){
         }
         return true;
     }
+
+    function playRound(row, col){
+        if(gameOver){
+            return;
+        }
+        if(board[row][col] !== ''){
+            return;
+        }
+
+        gameBoard.setCell(row, col, currPlayer.marker);
+        if(checkWinner(currPlayer.marker)){
+            gameOver = true;
+            return;
+        }
+        if(checkTie()){
+            gameOver = true;
+            return;
+        }
+        switchPlayer();
+    }
+
+    return {playRound}
 })();
+
+// console.log(gameController.playRound(0,0));
+// console.log(gameController.playRound(1,0));
+// console.log(gameController.playRound(0,1));
+// console.log(gameController.playRound(1,1));
+// console.log(gameController.playRound(0,2));
+// console.log(gameController.playRound(2,2));
+
+
+// console.log(gameBoard.getBoard());
