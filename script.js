@@ -114,15 +114,11 @@ const gameController = (function(){
         switchPlayer();
     }
 
-    return {playRound}
+    function restartGame(){
+        gameBoard.resetBoard();
+        gameOver = false;
+        currPlayer = player1;
+    }
+
+    return {playRound, restartGame}
 })();
-
-// console.log(gameController.playRound(0,0));
-// console.log(gameController.playRound(1,0));
-// console.log(gameController.playRound(0,1));
-// console.log(gameController.playRound(1,1));
-// console.log(gameController.playRound(0,2));
-// console.log(gameController.playRound(2,2));
-
-
-// console.log(gameBoard.getBoard());
