@@ -37,9 +37,18 @@ const gameController = (function(){
     let gameOver = false;
     const player1 = player('Player1', 'X');
     const player2 = player('Player2', 'O');
+    let winner = null;
     let currPlayer = player1;
 
-    const switchPlayer = () => {currPlayer = currPlayer === player1 ? player2 : player1};
+    const getGameStatus = () => gameOver;
+
+    const getWinner = () => winner;
+
+    const getCurrPlayer = () => currPlayer;
+
+    const switchPlayer = () => currPlayer = currPlayer === player1 ? player2 : player1;
+
+    
 
     function checkWinner(marker){
         //Check row wins
@@ -104,10 +113,12 @@ const gameController = (function(){
 
         gameBoard.setCell(row, col, currPlayer.marker);
         if(checkWinner(currPlayer.marker)){
+            winner = currPlayer;
             gameOver = true;
             return;
         }
         if(checkTie()){
+            winner = null;
             gameOver = true;
             return;
         }
@@ -117,8 +128,71 @@ const gameController = (function(){
     function restartGame(){
         gameBoard.resetBoard();
         gameOver = false;
+        winner = null;
         currPlayer = player1;
     }
 
-    return {playRound, restartGame}
+    return {playRound, restartGame, getCurrPlayer, getGameStatus, getWinner}
 })();
+
+const displayController = (function(){
+    const boardContainer = document.querySelector('.game-board-container');
+    const dialog = document.querySelector('dialog');
+    const resultMsg = document.querySelector('.result-msg');
+    const restartGameBtn = document.querySelector('.restart-game-btn');
+
+    function renderBoard(){
+        boardContainer.innerHTML = '';
+
+        const board = gameBoard.getBoard();
+
+        board.forEach((row, rowIndex) => {
+            row.forEach((element, colIndex) => {
+                const boardCell = document.createElement('div');
+                boardCell.classList.add('cell');
+
+                boardCell.textContent = element;
+
+                boardCell.dataset.row = rowIndex;
+                boardCell.dataset.col = colIndex;
+
+                boardContainer.appendChild(boardCell);
+
+                boardCell.addEventListener('click', () => {
+                    gameController.playRound(rowIndex, colIndex);
+                    renderBoard();
+                    checkGameStatus();
+                });
+            });
+        });
+    }
+
+    function checkGameStatus(){
+        if(!gameController.getGameStatus()) return;
+
+        const winner = gameController.getWinner();
+
+        if(winner){
+            resultMsg.textContent = `${winner.name} has won!`
+        }else{
+            resultMsg.textContent = 'Tie game!'
+        }
+
+        dialog.showModal();
+    }
+
+    restartGameBtn.addEventListener('click', () => {
+        gameController.restartGame();
+        renderBoard();
+        dialog.close();
+    })
+
+    function updateStatus(){
+
+    }
+
+
+    return {renderBoard};
+})();
+
+displayController.renderBoard();
