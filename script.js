@@ -39,6 +39,10 @@ const gameController = (function(){
     const player2 = player('Player2', 'O');
     let winner = null;
     let currPlayer = player1;
+    let scores = {
+        player1: 0,
+        player2: 0
+    };
 
     const getGameStatus = () => gameOver;
 
@@ -48,7 +52,7 @@ const gameController = (function(){
 
     const switchPlayer = () => currPlayer = currPlayer === player1 ? player2 : player1;
 
-    
+    const getScores = () => ({...scores});
 
     function checkWinner(marker){
         //Check row wins
@@ -115,8 +119,15 @@ const gameController = (function(){
         if(checkWinner(currPlayer.marker)){
             winner = currPlayer;
             gameOver = true;
+
+            if(currPlayer === player1){
+                scores.player1++;
+            } else{
+                scores.player2++;
+            }
             return;
         }
+
         if(checkTie()){
             winner = null;
             gameOver = true;
@@ -132,7 +143,12 @@ const gameController = (function(){
         currPlayer = player1;
     }
 
-    return {playRound, restartGame, getCurrPlayer, getGameStatus, getWinner}
+    function resetScores(){
+        scores.player1 = 0;
+        scores.player2 = 0;
+    }
+
+    return {playRound, restartGame, getCurrPlayer, getGameStatus, getWinner, getScores, resetScores};
 })();
 
 const displayController = (function(){
@@ -144,6 +160,9 @@ const displayController = (function(){
     const player2Container = document.querySelector('.player2-turn-container');
     const player1Turn = document.querySelector('.player1-turn');
     const player2Turn = document.querySelector('.player2-turn');
+    const player1Score = document.querySelector('.player1-score');
+    const player2Score = document.querySelector('.player2-score');
+    const resetScoresBtn = document.querySelector('.reset-scores-btn');
 
     function renderBoard(){
         boardContainer.innerHTML = '';
@@ -180,19 +199,13 @@ const displayController = (function(){
 
         if(winner){
             resultMsg.textContent = `${winner.name} has won!`
-        }else{
+        } else{
             resultMsg.textContent = 'Tie game!'
         }
 
+        updateScores();
         dialog.showModal();
     }
-
-    restartGameBtn.addEventListener('click', () => {
-        gameController.restartGame();
-        renderBoard();
-        updateTurnStatus();
-        dialog.close();
-    })
 
     function updateTurnStatus(){
         player1Container.classList.remove('active');
@@ -213,6 +226,29 @@ const displayController = (function(){
             player2Turn.hidden = false;
         }
     }
+
+    function updateScores(){
+        const {player1, player2} = gameController.getScores();
+
+        player1Score.textContent = player1;
+        player2Score.textContent = player2;
+    }
+
+    restartGameBtn.addEventListener('click', () => {
+        gameController.restartGame();
+        renderBoard();
+        updateTurnStatus();
+        dialog.close();
+    });
+
+    resetScoresBtn.addEventListener('click', () => {
+        gameController.resetScores();
+        gameController.restartGame();
+        updateScores();
+        renderBoard();
+        updateTurnStatus();
+        dialog.close();
+    });
 
 
     return {renderBoard};
