@@ -140,6 +140,10 @@ const displayController = (function(){
     const dialog = document.querySelector('dialog');
     const resultMsg = document.querySelector('.result-msg');
     const restartGameBtn = document.querySelector('.restart-game-btn');
+    const player1Container = document.querySelector('.player1-turn-container');
+    const player2Container = document.querySelector('.player2-turn-container');
+    const player1Turn = document.querySelector('.player1-turn');
+    const player2Turn = document.querySelector('.player2-turn');
 
     function renderBoard(){
         boardContainer.innerHTML = '';
@@ -161,10 +165,12 @@ const displayController = (function(){
                 boardCell.addEventListener('click', () => {
                     gameController.playRound(rowIndex, colIndex);
                     renderBoard();
+                    updateTurnStatus();
                     checkGameStatus();
                 });
             });
         });
+        updateTurnStatus();
     }
 
     function checkGameStatus(){
@@ -184,11 +190,28 @@ const displayController = (function(){
     restartGameBtn.addEventListener('click', () => {
         gameController.restartGame();
         renderBoard();
+        updateTurnStatus();
         dialog.close();
     })
 
-    function updateStatus(){
+    function updateTurnStatus(){
+        player1Container.classList.remove('active');
+        player2Container.classList.remove('active');
+        player1Turn.hidden = true;
+        player2Turn.hidden = true;
 
+        if(gameController.getGameStatus()) return;
+
+        const currentPlayer = gameController.getCurrPlayer();
+        if(currentPlayer.marker === 'X'){
+            player1Container.classList.add('active');
+            player1Turn.textContent = `It's ${currentPlayer.name}'s turn`;
+            player1Turn.hidden = false;
+        } else{
+            player2Container.classList.add('active');
+            player2Turn.textContent = `It's ${currentPlayer.name}'s turn`;
+            player2Turn.hidden = false;
+        }
     }
 
 
