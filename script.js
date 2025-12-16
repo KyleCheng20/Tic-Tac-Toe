@@ -156,13 +156,11 @@ const displayController = (function(){
     const dialog = document.querySelector('dialog');
     const resultMsg = document.querySelector('.result-msg');
     const restartGameBtn = document.querySelector('.restart-game-btn');
-    const player1Container = document.querySelector('.player1-turn-container');
-    const player2Container = document.querySelector('.player2-turn-container');
-    const player1Turn = document.querySelector('.player1-turn');
-    const player2Turn = document.querySelector('.player2-turn');
     const player1Score = document.querySelector('.player1-score');
     const player2Score = document.querySelector('.player2-score');
     const resetScoresBtn = document.querySelector('.reset-scores-btn');
+    const player1Indicator = document.querySelector('.player1-turn-indicator');
+    const player2Indicator = document.querySelector('.player2-turn-indicator');
 
     function renderBoard(){
         boardContainer.innerHTML = '';
@@ -214,22 +212,18 @@ const displayController = (function(){
     }
 
     function updateTurnStatus(){
-        player1Container.classList.remove('active');
-        player2Container.classList.remove('active');
-        player1Turn.hidden = true;
-        player2Turn.hidden = true;
-
         if(gameController.getGameStatus()) return;
 
+        player1Indicator.classList.remove('active');
+        player2Indicator.classList.remove('active');
         const currentPlayer = gameController.getCurrPlayer();
+        
         if(currentPlayer.marker === 'X'){
-            player1Container.classList.add('active');
-            player1Turn.textContent = `It's ${currentPlayer.name}'s turn`;
-            player1Turn.hidden = false;
+            player1Indicator.classList.add('active');
+            player1Indicator.querySelector('.turn-text').textContent = `It's ${currentPlayer.name}'s turn`;
         } else{
-            player2Container.classList.add('active');
-            player2Turn.textContent = `It's ${currentPlayer.name}'s turn`;
-            player2Turn.hidden = false;
+            player2Indicator.classList.add('active');
+            player2Indicator.querySelector('.turn-text').textContent = `It's ${currentPlayer.name}'s turn`;
         }
     }
 
