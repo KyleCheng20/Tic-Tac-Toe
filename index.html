@@ -11,35 +11,39 @@
         <dialog>
             <h3>Game Over!</h3>
             <p class="result-msg"></p>
-            <button type="button" class="restart-game-btn">Restart Game</button>
-            <button type="button" class="reset-scores-btn">Reset Scores</button>
+            <div class="dialog-btn-container">
+                <button type="button" class="restart-game-btn">Play Again</button>
+                <button type="button" class="reset-scores-btn">Reset Scores</button>
+            </div>
         </dialog>
+        
         <div class="container">
             <header>
                 <h1>Tic-Tac-Toe</h1>
             </header>
-            <div class="score-container">
-                <div class="player1-score-container">
-                    <div class="player1-info">
-                        <h2>Player 1</h2>
-                        <span class="player1-score">0</span>
+            <main>
+                <div class="score-container">
+                    <div class="player1-score-container">
+                        <div class="player1-info">
+                            <h2>Player 1</h2>
+                            <span class="player1-score">0</span>
+                        </div>
+                        <div class="player1-turn-container">
+                            <p class="player1-turn" hidden></p>
+                        </div>
                     </div>
-                    <div class="player1-turn-container">
-                        <p class="player1-turn" hidden></p>
+                    <div class="player2-score-container">
+                        <div class="player2-info">
+                            <span class="player2-score">0</span>
+                            <h2>Player 2</h2>
+                        </div>
+                        <div class="player2-turn-container">
+                            <p class="player2-turn" hidden></p>
+                        </div>
                     </div>
                 </div>
-                <div class="player2-score-container">
-                    <div class="player2-info">
-                        <h2>Player 2</h2>
-                        <span class="player2-score">0</span>
-                    </div>
-                    <div class="player2-turn-container">
-                        <p class="player2-turn" hidden></p>
-                    </div>
-                </div>
-            </div>
-            <div class="game-board-container">
-            </div>
+                <div class="game-board-container"></div> 
+            </main>
         </div>
         
     </body>
