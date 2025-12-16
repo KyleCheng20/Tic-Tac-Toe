@@ -35,8 +35,8 @@ function player(name, marker){
 const gameController = (function(){
     const board = gameBoard.getBoard();
     let gameOver = false;
-    const player1 = player('Player1', 'X');
-    const player2 = player('Player2', 'O');
+    const player1 = player('Player 1', 'X');
+    const player2 = player('Player 2', 'O');
     let winner = null;
     let currPlayer = player1;
     let scores = {
@@ -217,7 +217,7 @@ const displayController = (function(){
         player1Indicator.classList.remove('active');
         player2Indicator.classList.remove('active');
         const currentPlayer = gameController.getCurrPlayer();
-        
+
         if(currentPlayer.marker === 'X'){
             player1Indicator.classList.add('active');
             player1Indicator.querySelector('.turn-text').textContent = `It's ${currentPlayer.name}'s turn`;
