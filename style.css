@@ -1,5 +1,7 @@
 :root{
     --dark-blue: #091e29;
+    --greenyellow: #b5e61d;
+    --orange: #FF7F27;
 }
 
 *{
@@ -13,7 +15,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 5rem;
+    padding: 1rem;
 }
 
 body{
@@ -31,7 +34,7 @@ h1{
 main{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 5rem;
 }
 
 
@@ -117,6 +120,14 @@ main{
 .cell:nth-child(6),
 .cell:nth-child(9){
     border-right: none;
+}
+
+.X-marker{
+    color: var(--greenyellow);
+}
+
+.O-marker{
+    color: var(--orange);
 }
 
 /* --Dialog-- */

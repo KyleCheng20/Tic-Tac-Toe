@@ -187,6 +187,12 @@ const displayController = (function(){
                     updateTurnStatus();
                     checkGameStatus();
                 });
+
+                if(element === 'X'){
+                    boardCell.classList.add('X-marker');
+                } else if(element === 'O'){
+                    boardCell.classList.add('O-marker');
+                }
             });
         });
         updateTurnStatus();
