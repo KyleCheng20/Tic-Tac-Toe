@@ -5,7 +5,7 @@
 
 :root{
     --dark-blue: #091e29;
-    --light-blue: #223c4a;
+    --light-blue: #284352;
     --gray-blue: #1b2f3a;
     --greenyellow: #b5e61d;
     --orange: #FF7F27;
@@ -29,6 +29,7 @@ body{
     background-color: var(--dark-blue);
     color: white;
     font-family: 'outfit';
+    height: 100vh;
 }
 
 /* --Header-- */
@@ -44,6 +45,14 @@ header{
 h1{
     font-size: 2.5rem;
     font-weight: 700;
+}
+
+h1 span:nth-child(odd){
+    color: var(--greenyellow);
+}
+
+h1 span:nth-child(even){
+    color: var(--orange);
 }
 
 /* --Main-- */
@@ -77,21 +86,29 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+}
+
+.player1-info h2{
+    color: var(--greenyellow);
+}
+
+.player2-info h2{
+    color: var(--orange);
 }
 
 .player1-score,
 .player2-score{
-    background-color: white;
+    background-color: var(--light-blue);
     border-radius: 5px;
-    color: black;
+    color: white;
     width: 60px;
     height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 /* --Turn Bar-- */
@@ -113,7 +130,6 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
-
     transform: scaleX(0);
     transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -237,11 +253,12 @@ dialog:not([open]){
 }
 
 dialog h3{
-    font-size: 2rem;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
 }
 
 dialog p{
-    font-size: 1.25rem;
+    font-size: 1.45rem;
 }
 
 .dialog-btn-container{
@@ -278,3 +295,20 @@ dialog button{
     background-color: white;
 }
 
+/* --Github Link-- */
+.credit-link{
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+}
+
+.credit-link svg{
+    width: 30px;
+    height: 30px;
+    fill: #415e6e;
+    transition: 0.2s ease;
+}
+
+.credit-link svg:hover{
+    fill: #5e7a8a;
+}
